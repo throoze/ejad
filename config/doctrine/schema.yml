@@ -1,0 +1,91 @@
+User:
+  actAs: [Timestampable]
+  conection: doctrine
+  tableName: User
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    username:
+      type: string(50)
+      notnull: true
+    name:
+      type: string(50)
+      notnull: true
+    lastname:
+      type: string(50)
+      notnull: false
+    gender:
+      type: string(1)
+      notnull: true
+    email:
+      type: string(100)
+      notnull: true
+    passwd:
+      type: string(128)
+      notnull: false
+    status:
+      type: integer(2)
+      notnull: false
+      default: '0'
+    lastlogin:
+      type: timestamp
+      notnull: false
+    indexes:
+      idusername:
+        fields:
+          username:
+            sorting: ASC
+            length: 50
+          type: unique
+    relations:
+      Confirmation:
+        foreignType: one
+    attributes:
+      export: all
+      validate: true
+
+Confirmation:
+  actAs: [Timestampable]
+  conection: doctrine
+  tableName: Confirmation
+  columns:
+    hash:
+      type: string(64)
+      notnull: true
+
+BulletinType:
+  conection: doctrine
+  tableName: BulletinType
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    name:
+      type: string(30)
+      notnull: true
+    relations:
+      Users:
+        foreignAlias: SubsBulletins
+        class: User
+        refClass: Subscription
+
+Subscription:
+  actAs: [Timestampable]
+  conection: doctrine
+  tableName: Subscription
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    bulletintype_id:
+      type: integer
+      primary: true
+  relations:
+    User:
+      foreignAlias: Subscriptions
+    BulletinType:
+      foreignAlias: Subscribers
+      
