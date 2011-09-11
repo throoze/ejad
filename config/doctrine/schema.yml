@@ -1,6 +1,6 @@
 User:
   actAs: [Timestampable]
-  conection: doctrine
+  connection: doctrine
   tableName: User
   columns:
     id:
@@ -32,23 +32,23 @@ User:
     lastlogin:
       type: timestamp
       notnull: false
-    indexes:
-      idusername:
-        fields:
-          username:
-            sorting: ASC
-            length: 50
-          type: unique
-    relations:
-      Confirmation:
-        foreignType: one
-    attributes:
-      export: all
-      validate: true
+  indexes:
+    myindex1:
+      fields:
+        username:
+          sorting: ASC
+          length: 50
+        type: unique
+  relations:
+    Confirmation:
+      foreignType: one
+  attributes:
+    export: all
+    validate: true
 
 Confirmation:
   actAs: [Timestampable]
-  conection: doctrine
+  connection: doctrine
   tableName: Confirmation
   columns:
     hash:
@@ -56,7 +56,7 @@ Confirmation:
       notnull: true
 
 BulletinType:
-  conection: doctrine
+  connection: doctrine
   tableName: BulletinType
   columns:
     id:
@@ -66,15 +66,15 @@ BulletinType:
     name:
       type: string(30)
       notnull: true
-    relations:
-      Users:
-        foreignAlias: SubsBulletins
-        class: User
-        refClass: Subscription
+  relations:
+    Users:
+      foreignAlias: SubsBulletins
+      class: User
+      refClass: Subscription
 
 Subscription:
   actAs: [Timestampable]
-  conection: doctrine
+  connection: doctrine
   tableName: Subscription
   columns:
     user_id:
@@ -88,4 +88,3 @@ Subscription:
       foreignAlias: Subscriptions
     BulletinType:
       foreignAlias: Subscribers
-      
