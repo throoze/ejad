@@ -5,55 +5,109 @@ User:
   columns:
     id:
       type: integer
+      fixed: false
+      unsigned: true
       primary: true
       autoincrement: true
     username:
       type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: true
+      autoincrement: false
     name:
       type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: true
+      autoincrement: false
     lastname:
       type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: false
+      autoincrement: false
     gender:
       type: string(1)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: true
+      autoincrement: false
     email:
       type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: true
+      autoincrement: false
     passwd:
       type: string(128)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: false
+      autoincrement: false
     status:
-      type: integer(2)
-      notnull: false
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
       default: '0'
-    lastlogin:
-      type: timestamp
       notnull: false
+      autoincrement: false
+    lastlogin:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
   indexes:
-    myindex1:
+    usrname_unique:
       fields:
         username:
           sorting: ASC
-          length: 50
-        type: unique
+      type: unique
+    emailIdx:
+      fields:
+        email:
+          sorting: ASC
   relations:
     Confirmation:
-      foreignType: one
-  attributes:
-    export: all
-    validate: true
+      local: id
+      foreign: user_id
+      type: one
+    Subscription:
+      local: id
+      foreign: user_id
+      type: many
 
 Confirmation:
-  actAs: [Timestampable]
   connection: doctrine
   tableName: Confirmation
   columns:
+    user_id:
+      type: integer
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
     hash:
       type: string(64)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: true
+      autoincrement: false
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one
 
 BulletinType:
   connection: doctrine
@@ -61,16 +115,22 @@ BulletinType:
   columns:
     id:
       type: integer
+      fixed: false
+      unsigned: true
       primary: true
       autoincrement: true
     name:
       type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
       notnull: true
+      autoincrement: false
   relations:
-    Users:
-      foreignAlias: SubsBulletins
-      class: User
-      refClass: Subscription
+    Subscription:
+      local: id
+      foreign: bulletin_type_id
+      type: many
 
 Subscription:
   actAs: [Timestampable]
@@ -78,13 +138,23 @@ Subscription:
   tableName: Subscription
   columns:
     user_id:
-      type: integer
+      type: integer(4)
+      fixed: false
+      unsigned: true
       primary: true
-    bulletintype_id:
-      type: integer
+      autoincrement: false
+    bulletin_type_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
       primary: true
+      autoincrement: false
   relations:
     User:
-      foreignAlias: Subscriptions
+      local: user_id
+      foreign: id
+      type: one
     BulletinType:
-      foreignAlias: Subscribers
+      local: bulletin_type_id
+      foreign: id
+      type: one
