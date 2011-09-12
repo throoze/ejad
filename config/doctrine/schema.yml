@@ -1,10 +1,81 @@
+BulletinType:
+  connection: doctrine
+  tableName: BulletinType
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Subscription:
+      local: id
+      foreign: bulletin_type_id
+      type: many
+Confirmation:
+  actAs: [Timestampable]
+  connection: doctrine
+  tableName: Confirmation
+  columns:
+    user_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    hash:
+      type: string(64)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one
+Subscription:
+  actAs: [Timestampable]
+  connection: doctrine
+  tableName: Subscription
+  columns:
+    user_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    bulletin_type_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one
+    BulletinType:
+      local: bulletin_type_id
+      foreign: id
+      type: one
 User:
   actAs: [Timestampable]
   connection: doctrine
   tableName: User
   columns:
     id:
-      type: integer
+      type: integer(4)
       fixed: false
       unsigned: true
       primary: true
@@ -67,12 +138,12 @@ User:
       notnull: false
       autoincrement: false
   indexes:
-    usrname_unique:
+    username_unique:
       fields:
         username:
           sorting: ASC
       type: unique
-    emailIdx:
+    email:
       fields:
         email:
           sorting: ASC
@@ -85,76 +156,3 @@ User:
       local: id
       foreign: user_id
       type: many
-
-Confirmation:
-  connection: doctrine
-  tableName: Confirmation
-  columns:
-    user_id:
-      type: integer
-      fixed: false
-      unsigned: true
-      primary: true
-      autoincrement: false
-    hash:
-      type: string(64)
-      fixed: false
-      unsigned: false
-      primary: false
-      notnull: true
-      autoincrement: false
-  relations:
-    User:
-      local: user_id
-      foreign: id
-      type: one
-
-BulletinType:
-  connection: doctrine
-  tableName: BulletinType
-  columns:
-    id:
-      type: integer
-      fixed: false
-      unsigned: true
-      primary: true
-      autoincrement: true
-    name:
-      type: string(30)
-      fixed: false
-      unsigned: false
-      primary: false
-      notnull: true
-      autoincrement: false
-  relations:
-    Subscription:
-      local: id
-      foreign: bulletin_type_id
-      type: many
-
-Subscription:
-  actAs: [Timestampable]
-  connection: doctrine
-  tableName: Subscription
-  columns:
-    user_id:
-      type: integer(4)
-      fixed: false
-      unsigned: true
-      primary: true
-      autoincrement: false
-    bulletin_type_id:
-      type: integer(4)
-      fixed: false
-      unsigned: true
-      primary: true
-      autoincrement: false
-  relations:
-    User:
-      local: user_id
-      foreign: id
-      type: one
-    BulletinType:
-      local: bulletin_type_id
-      foreign: id
-      type: one

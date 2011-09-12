@@ -28,12 +28,13 @@ abstract class BaseConfirmation extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('Confirmation');
-        $this->hasColumn('user_id', 'integer', null, array(
+        $this->hasColumn('user_id', 'integer', 4, array(
              'type' => 'integer',
              'fixed' => 0,
              'unsigned' => true,
              'primary' => true,
              'autoincrement' => false,
+             'length' => 4,
              ));
         $this->hasColumn('hash', 'string', 64, array(
              'type' => 'string',
@@ -52,5 +53,9 @@ abstract class BaseConfirmation extends sfDoctrineRecord
         $this->hasOne('User', array(
              'local' => 'user_id',
              'foreign' => 'id'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

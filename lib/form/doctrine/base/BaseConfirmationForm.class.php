@@ -15,13 +15,17 @@ abstract class BaseConfirmationForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'user_id' => new sfWidgetFormInputHidden(),
-      'hash'    => new sfWidgetFormInputText(),
+      'user_id'    => new sfWidgetFormInputHidden(),
+      'hash'       => new sfWidgetFormInputText(),
+      'created_at' => new sfWidgetFormDateTime(),
+      'updated_at' => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
-      'user_id' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('user_id')), 'empty_value' => $this->getObject()->get('user_id'), 'required' => false)),
-      'hash'    => new sfValidatorString(array('max_length' => 64)),
+      'user_id'    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('user_id')), 'empty_value' => $this->getObject()->get('user_id'), 'required' => false)),
+      'hash'       => new sfValidatorString(array('max_length' => 64)),
+      'created_at' => new sfValidatorDateTime(),
+      'updated_at' => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('confirmation[%s]');

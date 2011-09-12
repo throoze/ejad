@@ -28,12 +28,13 @@ abstract class BaseBulletinType extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('BulletinType');
-        $this->hasColumn('id', 'integer', null, array(
+        $this->hasColumn('id', 'integer', 4, array(
              'type' => 'integer',
              'fixed' => 0,
              'unsigned' => true,
              'primary' => true,
              'autoincrement' => true,
+             'length' => 4,
              ));
         $this->hasColumn('name', 'string', 30, array(
              'type' => 'string',

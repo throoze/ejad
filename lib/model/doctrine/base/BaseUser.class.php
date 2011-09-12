@@ -52,12 +52,13 @@ abstract class BaseUser extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('User');
-        $this->hasColumn('id', 'integer', null, array(
+        $this->hasColumn('id', 'integer', 4, array(
              'type' => 'integer',
              'fixed' => 0,
              'unsigned' => true,
              'primary' => true,
              'autoincrement' => true,
+             'length' => 4,
              ));
         $this->hasColumn('username', 'string', 50, array(
              'type' => 'string',
@@ -134,7 +135,7 @@ abstract class BaseUser extends sfDoctrineRecord
              ));
 
 
-        $this->index('usrname_unique', array(
+        $this->index('username_unique', array(
              'fields' => 
              array(
               'username' => 
@@ -144,7 +145,7 @@ abstract class BaseUser extends sfDoctrineRecord
              ),
              'type' => 'unique',
              ));
-        $this->index('emailIdx', array(
+        $this->index('email', array(
              'fields' => 
              array(
               'email' => 
